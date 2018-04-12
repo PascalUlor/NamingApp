@@ -4,6 +4,7 @@ import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
 
 import express from 'express';
+import './serverRender';
 
 const server = express();
 
@@ -24,12 +25,7 @@ server.get('/', (req, res) => {
 server.use('/api', apiRouter);
 server.use(express.static('public'));
 
-// server.get('/about.html', (req, res) => {
-//     fs.readFile('./about.html', (err, data) => {
-//         res.send(data.toString());
-//     });
-// });
 
-server.listen(config.port, () => {
+server.listen(config.port, config.host, () => {
     console.info('Express listening on port', config.port);
 });
