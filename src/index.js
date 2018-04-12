@@ -6,6 +6,6 @@ console.log(data);
 
 
 ReactDOM.render(
-    <App contests={data.contests} />,
+    <App />,
     document.querySelector('#root')
 );
