@@ -6,7 +6,7 @@ import ContestPreview from './ContestPreview';
 class App extends React.Component {
     state ={
         pageHeader: "Naming Contests",
-        contests: []
+        contests: this.props.initialContests
     };
     componentDidMount() {
       // ajax req
@@ -32,7 +32,7 @@ class App extends React.Component {
           </div>
         </div>
             );
-    };
+      };
 };
 
 export default App;

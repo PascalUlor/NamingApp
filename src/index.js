@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 
 
-
-ReactDOM.render(
-    <App />,
+ReactDOM.hydrate(
+   <App initialContests={[]}/>,
     document.querySelector('#root')
 );
