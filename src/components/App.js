@@ -8,16 +8,24 @@ import * as api from '../api';
 const pushState = (obj, url) => 
   window.history.pushState(obj, '', url);
 
+const onPopState = handler => {
+  window.onpopstate = handler;
+};
+
 class App extends React.Component {
     static propTypes = {
       initialData: PropTypes.object.isRequired
     };
     state = this.props.initialData;
     componentDidMount() {
-      
+      onPopState((event) => {
+        this.setState({
+          currentContestId: (event.state || {}).currentContestId
+        });
+      });
     }
-    componentWillMount() {
-      // clean timers, listeners
+    componentWillUnmount() {
+      onPopState(null);
     }
     fetchContest = (contestId) => {
       pushState(
@@ -35,6 +43,19 @@ class App extends React.Component {
       });
     };
 
+    fetchContestList = () => {
+      pushState(
+        { currentContestId: null },
+        '/'
+      );
+      api.fetchContestList().then(contests => {
+        this.setState({
+          currentContestId: null,
+          contests
+        });
+      });
+    };
+
     pageHeader() {
       if (this.state.currentContestId) {
         return this.currentContest().contestName;
@@ -46,7 +67,9 @@ class App extends React.Component {
     }
     currentContent() {
       if (this.state.currentContestId) {
-        return <Contest {...this.currentContest()} />
+        return <Contest
+                contestListClick={this.fetchContestList}
+                {...this.currentContest()} />
       }
       return <ContestList 
       onContestClick={this.fetchContest}
