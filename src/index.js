@@ -9,9 +9,9 @@ ReactDOM.hydrate(
         document.querySelector('#root')
     );
     
-setTimeout(function () {
-    ReactDOM.hydrate(
-        <h1>Clear!!</h1>,
-            document.querySelector('#root')
-        ); 
-}, 5000);
+// setTimeout(function () {
+//     ReactDOM.hydrate(
+//         <h1>Clear!!</h1>,
+//             document.querySelector('#root')
+//         ); 
+// }, 5000);
