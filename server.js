@@ -23,7 +23,9 @@ server.get(['/', '/contest/:contestId'], (req, res) => {
           initialMarkup, initialData
         });
     })
-    .catch(console.error);
+    .catch(error => {
+        res.status(404).send("Bad request");
+    });
 });
 
 server.use('/api', apiRouter);
