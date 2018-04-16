@@ -66,9 +66,12 @@ class App extends React.Component {
       });
     };
 
+    currentContest() {
+      return this.state.contests[this.state.currentContestId];
+    }
     pageHeader() {
       if (this.state.currentContestId) {
-        return this.currentContest().contestName;
+        return this.currentContest().contestName
       }
       return 'Naming Contests';
     }
@@ -80,16 +83,31 @@ class App extends React.Component {
         };
       }
       return this.state.names[nameId];
-    }
-    currentContest() {
-      return this.state.contests[this.state.currentContestId]
-    }
+    };
+
+    addName = (newName, contestId) => {
+      // api call
+      api.addName(newName, contestId).then(res =>
+      this.setState({
+        contests: {
+          ...this.state.contests,
+          [res.updatedContest._id]: res.updateContest
+        },
+        names: {
+          ...this.state.names,
+          [res.newName._id]: res.newName
+        }
+      })
+    ).catch(console.error);
+    };
+    
     currentContent() {
       if (this.state.currentContestId) {
         return <Contest
                 contestListClick={this.fetchContestList}
                 fetchNames={this.fetchNames}
                 lookupName={this.lookupName}
+                addName={this.addName}
                 {...this.currentContest()} />
       }
       return <ContestList 
