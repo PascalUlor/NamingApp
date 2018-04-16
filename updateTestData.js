@@ -12,7 +12,7 @@ MongoClient.connect(config.mongodbUri, (err, db) => {
 
     contestCount++;
     db.collection('names')
-      .find({ id: { $in: contest.nameIds }})
+      .find({ _id: { $in: contest.nameIds }})
       .project({ _id: 1 })
       .toArray()
       .then(_ids => {
